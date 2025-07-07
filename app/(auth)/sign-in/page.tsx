@@ -1,7 +1,7 @@
 import React from "react";
 
 const SignUp = () => {
-  return <div>Sign in</div>;
+  return <section className="flex-center">Sign in</section>;
 };
 
 export default SignUp;
