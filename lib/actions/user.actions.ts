@@ -172,15 +172,15 @@ export const createBankAccount = async ({
       BANK_COLLECTION_ID!,
       ID.unique(),
       {
-        userId,
-        bankId,
         accountId,
+        bankId,
         accessToken,
         fundingSourceUrl,
-        shareableId,
+        sharableId: shareableId,
+        userId,
       }
     );
-
+    console.log(bankAccount);
     return parseStringify(bankAccount);
   } catch (error) {
     console.log(error);
@@ -228,7 +228,7 @@ export const exchangePublicToken = async ({
 
     // If the funding source URL is not created, throw an error
     if (!fundingSourceUrl) throw Error;
-
+    console.log(user);
     // Create a bank account using the user ID, item ID, account ID, access token, funding source URL, and shareableId ID
     await createBankAccount({
       userId: user.$id,

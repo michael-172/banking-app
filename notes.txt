@@ -1,0 +1,6 @@
+dont forget to handle loading or redirecting states
+and error states in:
+
+sign up
+create bank account
+sign in

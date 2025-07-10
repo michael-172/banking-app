@@ -68,7 +68,7 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
   try {
     // get bank from db
     const bank = await getBank({ documentId: appwriteItemId });
-
+    console.log(bank);
     // get account info from plaid
     const accountsResponse = await plaidClient.accountsGet({
       access_token: bank.accessToken,
@@ -79,6 +79,8 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
     const transferTransactionsData = await getTransactionsByBankId({
       bankId: bank.$id,
     });
+
+    console.log(transferTransactionsData);
 
     const transferTransactions = transferTransactionsData.documents.map(
       (transferData: Transaction) => ({
@@ -101,6 +103,8 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
       accessToken: bank?.accessToken,
     });
 
+    console.log(transactions);
+
     const account = {
       id: accountData.account_id,
       availableBalance: accountData.balances.available!,
@@ -114,14 +118,15 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
       appwriteItemId: bank.$id,
     };
 
-    // sort transactions by date such that the most recent transaction is first
-    const allTransactions = [...transactions, ...transferTransactions].sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-    );
+    // // sort transactions by date such that the most recent transaction is first
+    // const allTransactions = [...transactions, ...transferTransactions].sort(
+    //   (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    // );
 
     return parseStringify({
       data: account,
-      transactions: allTransactions,
+      // transactions: allTransactions,
+      transactions: [],
     });
   } catch (error) {
     console.error("An error occurred while getting the account:", error);
